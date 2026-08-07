@@ -1,15 +1,16 @@
 class Solution {
 public:
-    int solve(int row,int col){
+    int solve(int row,int col,vector<vector<int>> &dp){
         if(row==0 && col==0) return 1;
         if(row<0 || col<0) return 0;
-        
-        int left = solve(row,col-1);
-        int up = solve(row-1,col);
+        if(dp[row][col]!=-1) return dp[row][col];
+        int left = solve(row,col-1,dp);
+        int up = solve(row-1,col,dp);
 
-        return up + left;
+        return dp[row][col] = up + left;
     }
     int uniquePaths(int m, int n) {
-        return solve(m-1,n-1);
+        vector<vector<int>> dp(m,vector<int>(n,-1));
+        return solve(m-1,n-1,dp);
     }
 };
